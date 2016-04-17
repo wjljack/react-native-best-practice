@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "ReactNativeEasyBoilerplate.app"
-               BlueprintName = "ReactNativeEasyBoilerplate"
-               ReferencedContainer = "container:ReactNativeEasyBoilerplate.xcodeproj">
+               BuildableName = "ReactNativeBestPractice.app"
+               BlueprintName = "ReactNativeBestPractice"
+               ReferencedContainer = "container:ReactNativeBestPractice.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "ReactNativeEasyBoilerplate.app"
-            BlueprintName = "ReactNativeEasyBoilerplate"
-            ReferencedContainer = "container:ReactNativeEasyBoilerplate.xcodeproj">
+            BuildableName = "ReactNativeBestPractice.app"
+            BlueprintName = "ReactNativeBestPractice"
+            ReferencedContainer = "container:ReactNativeBestPractice.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "ReactNativeEasyBoilerplate.app"
-            BlueprintName = "ReactNativeEasyBoilerplate"
-            ReferencedContainer = "container:ReactNativeEasyBoilerplate.xcodeproj">
+            BuildableName = "ReactNativeBestPractice.app"
+            BlueprintName = "ReactNativeBestPractice"
+            ReferencedContainer = "container:ReactNativeBestPractice.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "ReactNativeEasyBoilerplate.app"
-            BlueprintName = "ReactNativeEasyBoilerplate"
-            ReferencedContainer = "container:ReactNativeEasyBoilerplate.xcodeproj">
+            BuildableName = "ReactNativeBestPractice.app"
+            BlueprintName = "ReactNativeBestPractice"
+            ReferencedContainer = "container:ReactNativeBestPractice.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -81,7 +81,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.reactnativeeasyboilerplate"
+        applicationId "com.ReactNativeBestPractice"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
