@@ -21,8 +21,8 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		E91A8E021CC3CAE200211AA9 /* libRCTSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E91A8DFD1CC3CAD100211AA9 /* libRCTSplashScreen.a */; };
-		E91A8E051CC3CB4600211AA9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E91A8E031CC3CB4600211AA9 /* LaunchScreen.xib */; };
-		E91A8E061CC3CB4600211AA9 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = E91A8E041CC3CB4600211AA9 /* splash.png */; };
+		E91A8E0C1CC3CD0300211AA9 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = E91A8E0B1CC3CD0300211AA9 /* splash.png */; };
+		E91A8E0E1CC3CD0C00211AA9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E91A8E0D1CC3CD0C00211AA9 /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,8 +132,8 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		E91A8DF21CC3CAD100211AA9 /* RCTSplashScreen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSplashScreen.xcodeproj; path = "../node_modules/@remobile/react-native-splashscreen/ios/RCTSplashScreen.xcodeproj"; sourceTree = "<group>"; };
-		E91A8E031CC3CB4600211AA9 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = "../node_modules/@remobile/react-native-splashscreen/ios/RCTSplashScreen/SplashScreenResource/LaunchScreen.xib"; sourceTree = "<group>"; };
-		E91A8E041CC3CB4600211AA9 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = "../node_modules/@remobile/react-native-splashscreen/ios/RCTSplashScreen/SplashScreenResource/splash.png"; sourceTree = "<group>"; };
+		E91A8E0B1CC3CD0300211AA9 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = ReactNativeBestPractice/splash.png; sourceTree = "<group>"; };
+		E91A8E0D1CC3CD0C00211AA9 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = ReactNativeBestPractice/LaunchScreen.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,8 +224,8 @@
 		13B07FAE1A68108700A75B9A /* ReactNativeBestPractice */ = {
 			isa = PBXGroup;
 			children = (
-				E91A8E031CC3CB4600211AA9 /* LaunchScreen.xib */,
-				E91A8E041CC3CB4600211AA9 /* splash.png */,
+				E91A8E0D1CC3CD0C00211AA9 /* LaunchScreen.xib */,
+				E91A8E0B1CC3CD0300211AA9 /* splash.png */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -517,8 +517,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E91A8E051CC3CB4600211AA9 /* LaunchScreen.xib in Resources */,
-				E91A8E061CC3CB4600211AA9 /* splash.png in Resources */,
+				E91A8E0C1CC3CD0300211AA9 /* splash.png in Resources */,
+				E91A8E0E1CC3CD0C00211AA9 /* LaunchScreen.xib in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
