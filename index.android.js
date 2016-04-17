@@ -6,7 +6,7 @@
 import React, {
     AppRegistry
 } from 'react-native';
-import Index from './src/main'
+import App from './src/main'
 
 
-AppRegistry.registerComponent('ReactNativeEasyBoilerplate',() => Index);
+AppRegistry.registerComponent('ReactNativeEasyBoilerplate',() => App);
