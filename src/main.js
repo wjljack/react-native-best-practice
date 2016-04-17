@@ -5,19 +5,22 @@ import RNRF, {Scene, Reducer, Router, Switch, TabBar, Modal, Schema, Actions} fr
 import {connect} from 'react-redux';
 import HomeView from './views/HomeView/HomeView'
 import ReduxDemo from './views/ReduxDemo/ReduxDemo'
-
+var SplashScreen = require('@remobile/react-native-splashscreen');
 
 
 const reducerCreate = params=> {
     const defaultReducer = Reducer(params);
     return (state, action)=> {
-       
+
         console.log("ACTION:", action);
         return defaultReducer(state, action);
     }
 };
 export default class App extends React.Component {
-
+    componentDidMount()
+    {
+        SplashScreen.hide();
+    }
     render() {
         const Router = connect()(RNRF.Router);
         return (
@@ -27,7 +30,6 @@ export default class App extends React.Component {
                         <Scene key="root" hideNavBar={true}>
                             <Scene key="homeView" initial={true} component={HomeView} title="HomeView"/>
                             <Scene key="reduxDemo"  component={ReduxDemo} title="ReduxDemo"/>
-
                         </Scene>
                     </Scene>
                 </Router>
