@@ -9,4 +9,4 @@ import React, {
 import App from './src/main'
 
 
-AppRegistry.registerComponent('ReactNativeEasyBoilerplate',() => App);
+AppRegistry.registerComponent('ReactNativeBestPractice',() => App);
