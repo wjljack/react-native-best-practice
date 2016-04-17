@@ -15,38 +15,13 @@ export class ReduxDemo extends Component {
     render() {
         console.log(this.props);
         return (
-            <View style={styles.container2}>
-
 
                 <View style={styles.container}>
-
-                    <Text style={styles.welcome}>
-                        Welcome to React Native!
-                    </Text>
-                    <Text style={styles.instructions}>
-                        To get started, edit index.ios.js
-                    </Text>
-
-
-                    <TouchableHighlight onPress={()=>this.props.increment(10)}>
-                        <View>
-                            <Text style={styles.instructions}>
-                                calc :{this.props.counter}
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
-
-                    <TouchableHighlight onPress={()=>this.props.doubleAsync()}>
-                        <View>
-                            <Text style={styles.instructions}>
-                                doublecalc :{this.props.counter}
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
-
+                    <Button onPress={()=>this.props.increment(10)}>   calc :{this.props.counter}</Button>
+                    <Button onPress={()=>this.props.doubleAsync()}>    doublecalc :{this.props.counter}</Button>
                     <Button onPress={Actions.pop}>Go back</Button>
                 </View>
-            </View>
+
         );
     }
 }
@@ -62,27 +37,11 @@ export default connect((mapStateToProps), {
 
 
 const styles = StyleSheet.create({
-    container2: {
-        flex: 1,
-        flexDirection: 'column',
-    },
-    viewpager: {
-        flex: 1,
-    },
+
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
     },
 });
