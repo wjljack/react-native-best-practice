@@ -5,10 +5,10 @@ import React, {
     View,
     TouchableHighlight
 } from 'react-native'
-
+import {bindActionCreators} from 'redux'
 import {Actions} from "react-native-router-flux";
 import {connect} from 'react-redux'
-import {increment, doubleAsync, test} from '../../redux/modules/demo'
+import {actions as couterActions} from '../../redux/modules/demo'
 import Button from "react-native-button";
 
 export class ReduxDemo extends Component {
@@ -17,8 +17,8 @@ export class ReduxDemo extends Component {
         return (
 
                 <View style={styles.container}>
-                    <Button onPress={()=>this.props.increment(10)}>   calc :{this.props.counter}</Button>
-                    <Button onPress={()=>this.props.doubleAsync()}>    doublecalc :{this.props.counter}</Button>
+                    <Button onPress={()=>this.props.actions.increment(10)}>   calc :{this.props.counter}</Button>
+                    <Button onPress={()=>this.props.actions.doubleAsync()}>    doublecalc :{this.props.counter}</Button>
                     <Button onPress={Actions.pop}>Go back</Button>
                 </View>
 
@@ -27,13 +27,16 @@ export class ReduxDemo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    counter: state.counter
+    ...state
 })
-export default connect((mapStateToProps), {
-    increment,
-    doubleAsync,
-    test
-})(ReduxDemo)
+
+function  mapActionsToProps(dispatch) {
+    return {
+        actions:bindActionCreators({...couterActions},dispatch)
+    }
+
+}
+export default connect(mapStateToProps,mapActionsToProps )(ReduxDemo)
 
 
 const styles = StyleSheet.create({
