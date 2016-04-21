@@ -21,6 +21,8 @@ export default class HomeView extends React.Component {
 
                 <Button onPress={Actions.reduxDemo}>Redux Demo</Button>
 
+                <Button onPress={Actions.scaleThenFadingScreenView}>ScaleThenFadingScreenView</Button>
+
             </View>
         );
     }

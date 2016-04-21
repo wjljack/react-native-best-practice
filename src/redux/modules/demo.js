@@ -1,6 +1,6 @@
 import {Actions} from 'react-native-router-flux';
 import {createAction, handleActions} from 'redux-actions'
-
+import  Immutable,{List,Record} from 'immutable'
 
 const initialState = 0
 

@@ -5,6 +5,8 @@ import RNRF, {Scene, Reducer, Router, Switch, TabBar, Modal, Schema, Actions} fr
 import {connect} from 'react-redux';
 import HomeView from './views/HomeView/HomeView'
 import ReduxDemo from './views/ReduxDemo/ReduxDemo'
+import ScaleThenFadingScreenView from './views/ScaleThenFadingScreenDemo/ScaleThenFadingScreenView'
+
 var SplashScreen = require('@remobile/react-native-splashscreen');
 
 
@@ -30,6 +32,8 @@ export default class App extends React.Component {
                         <Scene key="root" hideNavBar={true}>
                             <Scene key="homeView" initial={true} component={HomeView} title="HomeView"/>
                             <Scene key="reduxDemo"  component={ReduxDemo} title="ReduxDemo"/>
+                            <Scene key="scaleThenFadingScreenView"  duration={1} component={ScaleThenFadingScreenView} title="ScaleThenFadingScreenView"/>
+
                         </Scene>
                     </Scene>
                 </Router>
