@@ -30,7 +30,7 @@ export default class App extends React.Component {
                 <Router createReducer={reducerCreate}>
                     <Scene key="modal" component={Modal}>
                         <Scene key="root" hideNavBar={true}>
-                            <Scene key="homeView" initial={true} component={HomeView} title="HomeView"/>
+                            <Scene key="homeView" initial={true} component={HomeView} type="replace" title="HomeView"/>
                             <Scene key="reduxDemo"  component={ReduxDemo} title="ReduxDemo"/>
                             <Scene key="scaleThenFadingScreenView"  duration={1} component={ScaleThenFadingScreenView} title="ScaleThenFadingScreenView"/>
 
