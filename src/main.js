@@ -48,7 +48,7 @@ export default class App extends React.Component {
             <Provider store={store}>
                 <Router createReducer={reducerCreate}  scenes={scenes}>
                 </Router>
-            </ Provider >
+            </Provider>
         );
     }
 }
