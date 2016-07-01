@@ -126,12 +126,11 @@ export default class HomeView extends React.Component {
 
     _renderRow (project, index) {
 
+     
         let  source = {uri: project.get('Photo'), isStatic: true};
-
-        debugger;
         return (
             <View key={index}>
-                <TouchableHighlight onPress={ Actions.detailView}>
+                <TouchableHighlight onPress={()=> Actions.detailView({objectId:project.get('objectId')})}>
                     <View style={styles.column}>
 
                         {source.uri==undefined?

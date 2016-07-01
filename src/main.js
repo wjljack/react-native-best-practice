@@ -30,7 +30,7 @@ const scenes = Actions.create(
             PubSub.publish( 'test', 'hello world!' );
         }
             } rightTitle="保存"/>
-            <Scene key="detailView" component={DetailView} title="详情" />
+            <Scene key="detailView" component={NewView} title="编辑联系人" />
         </Scene>
     </Scene>
 );
