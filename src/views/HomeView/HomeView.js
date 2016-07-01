@@ -1,4 +1,4 @@
-import React, {View, Text,Image, StyleSheet,RefreshControl,ListView,ScrollView,TouchableHighlight} from "react-native";
+import React, {View, Text,Image, StyleSheet,PixelRatio,RefreshControl,ListView,ScrollView,TouchableHighlight} from "react-native";
 import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
 
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     separator: {
         height: 1,
         backgroundColor: '#bbbbbb',
-        marginLeft: 15
+
     },
     rowTitleText: {
         color: '#ea4c89',
@@ -65,6 +65,16 @@ const styles = StyleSheet.create({
         color: '#888888',
 
 
+    } ,avatarContainer: {
+
+
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    avatar: {
+        borderRadius: 75,
+        width: 48,
+        height: 48
     }
 })
 
@@ -82,7 +92,6 @@ export default class HomeView extends React.Component {
         });
     }
 
-
     constructor () {
         super()
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
@@ -90,8 +99,6 @@ export default class HomeView extends React.Component {
             dataSource: ds.cloneWithRows([]),
             refreshing: false,
         }
-
-
     }
     _onRefresh() {
         this.setState({refreshing: true});
@@ -106,8 +113,6 @@ export default class HomeView extends React.Component {
         }, function (error) {
             this.setState({refreshing: false});
         });
-
-
     }
     render () {
         return (
@@ -119,25 +124,26 @@ export default class HomeView extends React.Component {
                         dataSource={this.state.dataSource}
                         renderRow={this._renderRow}
                     />
-
             </View>
         )
     }
 
     _renderRow (project, index) {
 
-     
+
         let  source = {uri: project.get('Photo'), isStatic: true};
         return (
             <View key={index}>
                 <TouchableHighlight onPress={()=> Actions.detailView({objectId:project.get('objectId')})}>
-                    <View style={styles.column}>
+                    <View style={[styles.column]}>
 
                         {source.uri==undefined?
-                            <Image  style={{width: 48, height: 48, alignSelf:'center'}} source={require('./contact.png')} ></Image>
+                            <Image  style={{width: 48, height: 48, marginLeft:10}} source={require('./contact.png')} ></Image>
                         :
-                            <Image  style={{width: 48, height: 48, alignSelf:'center'}}
+                            <View style={[styles.avatar,styles.avatarContainer]}>
+                            <Image  style={{width: 41, height: 41,marginLeft:18, borderRadius: 19,}}
                                     source = {source} ></Image>
+                                </View>
                         }
                     <View style={styles.content}>
                         <Text style={styles.rowTitleText}>

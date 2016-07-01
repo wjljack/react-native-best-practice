@@ -4,7 +4,7 @@
 /**
  * Created by lx on 16/6/30.
  */
-import React, {View,TextInput, Text, StyleSheet,ListView,PixelRatio,ScrollView,TouchableOpacity,Image,Platform,TouchableHighlight} from "react-native";
+import React, {View,Alert,TextInput, Text, StyleSheet,ListView,PixelRatio,ScrollView,TouchableOpacity,Image,Platform,TouchableHighlight} from "react-native";
 
 var AV = require('leancloud-storage');
 var APP_ID = 'yQvWzNn37xnO9c2saeIkTE4d-gzGzoHsz';
@@ -79,9 +79,6 @@ export default class NewView extends React.Component {
                         Company:results[0].get('Company'),
                         Photo:results[0].get('Photo'),
                     }});
-                    console.log(self.state);
-
-
                 }
             }, function (error) {
             });
@@ -94,22 +91,63 @@ export default class NewView extends React.Component {
         console.log(this);
         var me=this;
         var token = PubSub.subscribe( 'test', function (dd) {
-            // 声明一个 Todo 类型
-            var MyUser = AV.Object.extend('MyUser');
-            // 新建一个 Todo 对象
-            var myUser = new MyUser();
-            myUser.set('UserName', me.state.user.UserName);
-            myUser.set('Photo', me.state.user.Photo);
-            myUser.set('Mobile',me.state.user.Mobile );
-            myUser.set('Company', me.state.user.Company);
+            console.log(me.state.user.UserName);
+            if(me.state.user.UserName==false)
+            {
+                Alert.alert('姓名不能为空!')
+                return;
+            }
+                if(me.state.user.Mobile ==false)
+            {
+                Alert.alert('联系电话不能为空!')
+                return;
+            }
+            if(me.props.name=="detailView") {
+                console.log( me.state);
+                // 声明类型
+                // 第一个参数是 className，第二个参数是 objectId
+                var myUser = AV.Object.createWithoutData('MyUser', me.props.navigationState.objectId);
+                // 修改属性
+                myUser.set('UserName', me.state.user.UserName );
+                myUser.set('Mobile', me.state.user.Mobile);
+                myUser.set('Company',me.state.user.Company);
+                myUser.set('Photo', me.state.user.Photo);
+                // 保存到云端
+                myUser.save().then(function (todo) {
+                    // 成功保存之后，执行其他逻辑.
+                    Alert.alert(
+                        '提示框',
+                        '修改成功',
+                    )
+                    console.log(todo);
+                }, function (error) {
+                    // 失败之后执行其他逻辑
+                    console.log('Failed to create new object, with error message: ' + error.message);
+                });
+            }
+            else {
+                // 声明一个 Todo 类型
+                var MyUser = AV.Object.extend('MyUser');
+                // 新建一个 Todo 对象
+                var myUser = new MyUser();
+                myUser.set('UserName', me.state.user.UserName);
+                myUser.set('Photo', me.state.user.Photo);
+                myUser.set('Mobile', me.state.user.Mobile);
+                myUser.set('Company', me.state.user.Company);
 
-            myUser.save().then(function (todo) {
-                // 成功保存之后，执行其他逻辑.
-                console.log('New object created with objectId: ' + todo.id);
-            }, function (error) {
-                // 失败之后执行其他逻辑
-                console.log('Failed to create new object, with error message: ' + error.message);
-            });
+                myUser.save().then(function (todo) {
+                    // 成功保存之后，执行其他逻辑.
+
+                    Alert.alert(
+                        '提示框',
+                        '新增成功',
+                    )
+                    console.log('New object created with objectId: ' + todo.id);
+                }, function (error) {
+                    // 失败之后执行其他逻辑
+                    console.log('Failed to create new object, with error message: ' + error.message);
+                });
+            }
         } );
     }
 
@@ -141,15 +179,7 @@ export default class NewView extends React.Component {
             }
             else {
                 var source;
-                console.log(response.data);
-                // You can display the image using either:
                 source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
-                // Or:
-                // if (Platform.OS === 'android') {
-                //   source = {uri: response.uri, isStatic: true};
-                // } else {
-                //   source = {uri: response.uri.replace('file://', ''), isStatic: true};
-                // }
                 var user = self.state.user;
                 self.setState({user: Object.assign(user, {[field]:source.uri})});
             }
