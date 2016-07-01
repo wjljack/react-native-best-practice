@@ -25,15 +25,21 @@ const scenes = Actions.create(
         <Scene key="root" >
             <Scene key="homeView" initial={true} component={HomeView}
                    rightButtonTextStyle={{fontSize:35, marginTop:-15}}
-                   onRight={()=>Actions.newView()} rightTitle="+" type="replace" title="通讯录"/>
-            <Scene key="newView" component={NewView} title="新建联系人"  onRight={(a,b,c,d)=>{
-            PubSub.publish( 'test', 'hello world!' );
-        }
-            } rightTitle="保存"/>
+                   onRight={()=>Actions.newView()} rightTitle="+" type="replace" title="通讯录" />
+            <Scene key="newView" component={NewView} title="新建联系人"
+                   onRight={(a,b)=>{
+                                PubSub.publish( 'test', 'hello world!' );
+                            }} rightTitle="保存"  leftTitle="返回" onLeft={()=>
+            {Actions.pop();
+               PubSub.publish( 'reload', 'hello world!' );
+            }}/>
             <Scene key="detailView" duaration={0} component={NewView} title="编辑联系人" onRight={(a,b,c,d)=>{
-            PubSub.publish( 'test', 'hello world!' );
+            PubSub.publish('test', 'hello world!' );
         }
-            } rightTitle="保存"/>
+            } rightTitle="保存" leftTitle="返回" onLeft={()=>
+            {Actions.pop();
+               PubSub.publish( 'reload', 'hello world!' );
+            }}/>
         </Scene>
     </Scene>
 );
