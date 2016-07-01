@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        backgroundColor: 'transparent',
+
     },
     welcome: {
         fontSize: 20,
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         top: 0,
-        backgroundColor: 'black',
+        backgroundColor: 'transparent',
         width: width
     }
 });
@@ -70,14 +71,13 @@ export default class ScaleThenFadingScreenView extends React.Component {
 
     renderAnimatedView() {
         if (this.state.showPage == false) {
-            return (<Animated.View
-                style={[styles.overlay,{transform: [{scale: this._animatedValue}]},{opacity:this._opanimatedValue}]}>
+            return (<Animated.Image defaultValue={require('./screen.png')} source={require('./screen.png')}
+                style={[styles.overlay,{transform: [{scale: this._animatedValue}]},{opacity:this._opanimatedValue},{width: width, height: height}]}>
 
 
-                <Image source={require('./screen.png')} style={{width: width, height: height}}/>
 
 
-            </Animated.View>)
+            </Animated.Image>)
         }
 
     }

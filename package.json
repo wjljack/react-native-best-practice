@@ -8,10 +8,13 @@
   "dependencies": {
     "@remobile/react-native-splashscreen": "^1.0.3",
     "immutable": "^3.7.6",
+    "leancloud-storage": "^1.2.0",
+    "pubsub-js": "^1.5.3",
     "react": "^0.14.8",
     "react-native": "^0.24.0-rc5",
     "react-native-button": "^1.4.2",
     "react-native-drawer": "^2.0.0",
+    "react-native-image-picker": "^0.20.0",
     "react-native-modalbox": "^1.3.2",
     "react-native-router-flux": "^3.2.13",
     "react-native-viewpager": "^0.2.1",

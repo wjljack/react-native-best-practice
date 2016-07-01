@@ -1,30 +1,160 @@
-import React, {View, Text, StyleSheet} from "react-native";
+import React, {View, Text,Image, StyleSheet,RefreshControl,ListView,ScrollView,TouchableHighlight} from "react-native";
 import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
+
+var AV = require('leancloud-storage');
+var APP_ID = 'yQvWzNn37xnO9c2saeIkTE4d-gzGzoHsz';
+var APP_KEY = 'CEDi2aX8iBl8eUwmy2yLnkcU';
+AV.init({
+    appId: APP_ID,
+    appKey: APP_KEY
+});
 
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "transparent",
+        marginTop:64
+    },
+    content: {
+        flex: 1,
+        justifyContent:"center",
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    list: {
+        backgroundColor: '#eeeeee'
+    },
+    titleBar: {
+        height: 60,
+        backgroundColor: '#05A5D1',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    titleBarText: {
+        fontSize: 18,
+        fontWeight: '500',
+        marginTop: 20,
+        color: '#ffffff'
+    },
+    column: {
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        flex:1,
+        flexDirection:'row'
+    },
+    row: {
+        flex:1,
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        paddingHorizontal: 15,
+        paddingVertical: 8
+    },
+    separator: {
+        height: 1,
+        backgroundColor: '#bbbbbb',
+        marginLeft: 15
+    },
+    rowTitleText: {
+        color: '#ea4c89',
+        fontSize: 17,
+        fontWeight: '500'
+    },
+    rowDetailText: {
+        fontSize: 17,
+        color: '#888888',
+
+
     }
-});
+})
 
 export default class HomeView extends React.Component {
 
-    render(){
+    componentWillMount(){
+        var query = new AV.Query('MyUser');
+        var me=this;
+        query.find().then(function (results) {
+            const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+            me.setState({dataSource: me.state.dataSource.cloneWithRows(
+                results
+            ),  refreshing: false});
+        }, function (error) {
+        });
+    }
+
+
+    constructor () {
+        super()
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+        this.state = {
+            dataSource: ds.cloneWithRows([]),
+            refreshing: false,
+        }
+
+
+    }
+    _onRefresh() {
+        this.setState({refreshing: true});
+
+        var query = new AV.Query('MyUser');
+        var me=this;
+        query.find().then(function (results) {
+            const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+            me.setState({dataSource: me.state.dataSource.cloneWithRows(
+                results
+            ),  refreshing: false});
+        }, function (error) {
+            this.setState({refreshing: false});
+        });
+
+
+    }
+    render () {
         return (
             <View style={styles.container}>
-                <Text>Home View</Text>
-
-                <Button onPress={Actions.reduxDemo}>Redux Demo</Button>
-
-                <Button onPress={Actions.scaleThenFadingScreenView}>ScaleThenFadingScreenView</Button>
+                    <ListView refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}/>}
+                        dataSource={this.state.dataSource}
+                        renderRow={this._renderRow}
+                    />
 
             </View>
-        );
+        )
     }
+
+    _renderRow (project, index) {
+
+        let  source = {uri: project.get('Photo'), isStatic: true};
+
+        debugger;
+        return (
+            <View key={index}>
+                <TouchableHighlight onPress={ Actions.detailView}>
+                    <View style={styles.column}>
+
+                        {source.uri==undefined?
+                            <Image  style={{width: 48, height: 48, alignSelf:'center'}} source={require('./contact.png')} ></Image>
+                        :
+                            <Image  style={{width: 48, height: 48, alignSelf:'center'}}
+                                    source = {source} ></Image>
+                        }
+                    <View style={styles.content}>
+                        <Text style={styles.rowTitleText}>
+                            {project.get("UserName")}
+                        </Text>
+                        <Text style={styles.rowDetailText}>
+                            {project.get("Mobile")}
+                        </Text>
+                    </View>
+                    </View>
+                </TouchableHighlight>
+                <View style={styles.separator}/>
+            </View>
+        )
+    }
+
+
 }
 

@@ -4,9 +4,10 @@ import {Provider} from 'react-redux'
 import RNRF, {Scene, Reducer, Router, Switch, TabBar, Modal, Schema, Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux';
 import HomeView from './views/HomeView/HomeView'
-import ReduxDemo from './views/ReduxDemo/ReduxDemo'
-import ScaleThenFadingScreenView from './views/ScaleThenFadingScreenDemo/ScaleThenFadingScreenView'
+import NewView from './views/NewView/NewView'
+import DetailView from './views/DetailView/DetailView'
 
+import Pubsub from 'pubsub-js'
 var SplashScreen = require('@remobile/react-native-splashscreen');
 
 
@@ -18,6 +19,21 @@ const reducerCreate = params=> {
         return defaultReducer(state, action);
     }
 };
+
+const scenes = Actions.create(
+    <Scene key="modal" component={Modal}>
+        <Scene key="root" >
+            <Scene key="homeView" initial={true} component={HomeView}
+                   rightButtonTextStyle={{fontSize:35, marginTop:-15}}
+                   onRight={()=>Actions.newView()} rightTitle="+" type="replace" title="通讯录"/>
+            <Scene key="newView" component={NewView} title="新建联系人"  onRight={(a,b,c,d)=>{
+            PubSub.publish( 'test', 'hello world!' );
+        }
+            } rightTitle="保存"/>
+            <Scene key="detailView" component={DetailView} title="详情" />
+        </Scene>
+    </Scene>
+);
 export default class App extends React.Component {
     componentDidMount()
     {
@@ -27,15 +43,7 @@ export default class App extends React.Component {
         const Router = connect()(RNRF.Router);
         return (
             <Provider store={store}>
-                <Router createReducer={reducerCreate}>
-                    <Scene key="modal" component={Modal}>
-                        <Scene key="root" hideNavBar={true}>
-                            <Scene key="homeView" initial={true} component={HomeView} type="replace" title="HomeView"/>
-                            <Scene key="reduxDemo"  component={ReduxDemo} title="ReduxDemo"/>
-                            <Scene key="scaleThenFadingScreenView"  duration={1} component={ScaleThenFadingScreenView} title="ScaleThenFadingScreenView"/>
-
-                        </Scene>
-                    </Scene>
+                <Router createReducer={reducerCreate}  scenes={scenes}>
                 </Router>
             </ Provider >
         );
