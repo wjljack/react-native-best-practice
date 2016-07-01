@@ -42,59 +42,54 @@ export default class NewView extends React.Component {
             Photo:null
         },
 
-        metadataForm :{
-        id: "",
-        pageType: "appForm",
-        entity: "MyUser",
-        layout: {
-            views: [
-                {
-                    control: "Image",
-                    text: "头像",
-                    field: "Photo"
-                },
-                {
-                    control: "TextBox",
-                    text: "用户名",
-                    field: "UserName"
-                },
-                {
-                    control: "TextBox",
-                    text: "公司",
-                    field: "Company"
-                },
-                {
-                    control: "TextBox",
-                    text: "电话",
-                    field: "Mobile"
-                },
-                {
-                    control: "Switch",
-                    text: "是否管理员",
-                    field: "IsAdmin"
-                }
+        metadataForm :[]
 
-            ]
-        }
-    }
     };
 
     componentWillMount()
     {
         var me=this;
+        var query = new AV.Query('Metadata');
+        // 查询 priority 是 0 的 Todo
+        query.equalTo('objectId', '5774ee9b5bbb50005928f11c');
+        query.find().then(function (results) {
+
+            var data=  results[0].get("data").pages.find(p=>p.id=='18710ceb-ddfe-428f-ad85-ce810ad010c7').layout.ios.components;
+            me.setState({metadataForm:data});
+
+            if(me.props.name=="detailView")
+            {
+
+              console.log('ffff')
+                var self=me;
+                var query = new AV.Query('MyUser');
+                // 查询 priority 是 0 的 Todo
+                query.equalTo('objectId', self.props.navigationState.objectId);
+                query.find().then(function (results) {
+
+                    if(results.length>0)
+                    {
+                        let user={};
+                        self.state.metadataForm.forEach(cell=> {
+                            user[cell.layout.name]=results[0].get(cell.layout.name);
+                        })
+                        self.setState({ user:user});
+                    }
+                }, function (error) {
+                });
+            }
+
+
+        });
+
+
+
+
         PubSub.unsubscribe('test');
         var token = PubSub.subscribe( 'test', function (dd) {
             console.log('test');
-            if(me.state.user.UserName==false)
-            {
-                Alert.alert('姓名不能为空!')
-                return;
-            }
-            if(me.state.user.Mobile ==false)
-            {
-                Alert.alert('联系电话不能为空!')
-                return;
-            }
+
+
             if(me.props.name=="detailView") {
 
                 // 声明类型
@@ -103,8 +98,8 @@ export default class NewView extends React.Component {
                 // 修改属性
 
 
-                me.state.metadataForm.layout.views.forEach(cell=> {
-                    myUser.set(cell.field, me.state.user[cell.field]);
+                me.state.metadataForm.forEach(cell=> {
+                    myUser.set(cell.layout.name, me.state.user[cell.layout.name]);
 
                 })
 
@@ -128,8 +123,8 @@ export default class NewView extends React.Component {
                 // 新建一个 Todo 对象
                 var myUser = new MyUser();
 
-                me.state.metadataForm.layout.views.forEach(cell=> {
-                    myUser.set(cell.field, me.state.user[cell.field]);
+                me.state.metadataForm.forEach(cell=> {
+                    myUser.set(cell.layout.name, me.state.user[cell.layout.name]);
 
                 })
 
@@ -148,26 +143,8 @@ export default class NewView extends React.Component {
             }
         } );
 
-        if(this.props.name=="detailView")
-        {
 
-            var self=this;
-            var query = new AV.Query('MyUser');
-            // 查询 priority 是 0 的 Todo
-            query.equalTo('objectId', self.props.navigationState.objectId);
-            query.find().then(function (results) {
 
-                if(results.length>0)
-                {
-                    let user={};
-                    self.state.metadataForm.layout.views.forEach(cell=> {
-                        user[cell.field]=results[0].get(cell.field);
-                    })
-                    self.setState({ user:user});
-                }
-            }, function (error) {
-            });
-        }
     }
 
 
@@ -222,7 +199,7 @@ export default class NewView extends React.Component {
 
     renderImage(cell){
         let source={uri : this.state.user.Photo, isStatic: true};
-        return  <TouchableOpacity onPress={this.selectPhotoTapped.bind(this,cell.field)}>
+        return  <TouchableOpacity onPress={this.selectPhotoTapped.bind(this,cell.layout.name)}>
             <View style={[styles.avatar,styles.avatarContainer]}>
                 {this.state.user.Photo === null ?  <Image style={styles.avatar} source={require('../HomeView/contact.png')}/>:
                     <Image style={styles.avatar} source={source} /> }
@@ -239,17 +216,17 @@ export default class NewView extends React.Component {
             >
                 <View style={styles.container}>
 
-                      {this.state.metadataForm.layout.views.map(cell=> {
+                      {this.state.metadataForm.map(cell=> {
 
                           return (()=> {
-                              switch (cell.control) {
+                              switch (cell.type) {
                                   case "TextBox":
                                   return <View style={styles.row}>
                                       <Text style={{width:100,alignSelf:'center',
                                           marginLeft:20,fontSize:18}}>
-                                          {cell.text}
+                                          {cell.layout.title}
                                       </Text>
-                                      <TextInput placeholder={cell.text}
+                                      <TextInput placeholder={cell.layout.title}
                                                  style={{
                                                          height: 40,
                                                          width: 260,
@@ -258,30 +235,30 @@ export default class NewView extends React.Component {
                                                          flex:1,
                                                          paddingLeft:6
                                                      }}
-                                                 onChangeText={(text)=>self.handleValueChange(cell.field, text)}
-                                                 value={self.state.user[cell.field]}
+                                                 onChangeText={(text)=>self.handleValueChange(cell.layout.name, text)}
+                                                 value={self.state.user[cell.layout.name]}
                                       />
                                   </View>;
                                   case "Switch":
                                       return <View style={styles.row}>
                                           <Text style={{width:100,alignSelf:'center',
                                           marginLeft:20,fontSize:18}}>
-                                              {cell.text}
+                                              {cell.layout.title}
                                           </Text>
 
                                           <Switch
-                                              onValueChange={(value) => self.handleValueChange(cell.field, value)}
+                                              onValueChange={(value) => self.handleValueChange(cell.layout.name, value)}
                                               style={{
                                                 height: 40,
                                                          width: 260,
                                                          flex:1,
                                                          paddingLeft:6
                                                      }}
-                                              value={self.state.user[cell.field]} />
+                                              value={self.state.user[cell.layout.name]} />
 
 
                                       </View>;
-                                  case "Image":
+                                  case "Photo":
                                       return <View style={styles.row}>
                                                    {self.renderImage(cell)}
                                       </View>;

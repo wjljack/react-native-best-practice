@@ -98,6 +98,9 @@ export default class HomeView extends React.Component {
             });
         });
 
+        
+        
+        
 
         query.find().then(function (results) {
             const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
