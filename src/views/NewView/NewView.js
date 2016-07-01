@@ -103,10 +103,12 @@ export default class NewView extends React.Component {
                 // 修改属性
 
 
-                myUser.set('UserName', me.state.user.UserName );
-                myUser.set('Mobile', me.state.user.Mobile);
-                myUser.set('Company',me.state.user.Company);
-                myUser.set('Photo', me.state.user.Photo);
+                me.state.metadataForm.layout.views.forEach(cell=> {
+                    myUser.set(cell.field, me.state.user[cell.field]);
+
+                })
+
+
                 // 保存到云端
                 myUser.save().then(function (todo) {
                     // 成功保存之后，执行其他逻辑.
@@ -125,10 +127,11 @@ export default class NewView extends React.Component {
                 var MyUser = AV.Object.extend('MyUser');
                 // 新建一个 Todo 对象
                 var myUser = new MyUser();
-                myUser.set('UserName', me.state.user.UserName);
-                myUser.set('Photo', me.state.user.Photo);
-                myUser.set('Mobile', me.state.user.Mobile);
-                myUser.set('Company', me.state.user.Company);
+
+                me.state.metadataForm.layout.views.forEach(cell=> {
+                    myUser.set(cell.field, me.state.user[cell.field]);
+
+                })
 
                 myUser.save().then(function (todo) {
                     // 成功保存之后，执行其他逻辑.
@@ -156,13 +159,11 @@ export default class NewView extends React.Component {
 
                 if(results.length>0)
                 {
-
-                    self.setState({ user:{
-                        UserName:results[0].get('UserName'),
-                        Mobile:results[0].get('Mobile'),
-                        Company:results[0].get('Company'),
-                        Photo:results[0].get('Photo'),
-                    }});
+                    let user={};
+                    self.state.metadataForm.layout.views.forEach(cell=> {
+                        user[cell.field]=results[0].get(cell.field);
+                    })
+                    self.setState({ user:user});
                 }
             }, function (error) {
             });
