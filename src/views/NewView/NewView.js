@@ -272,6 +272,8 @@ export default class NewView extends React.Component {
                                           <Switch
                                               onValueChange={(value) => self.handleValueChange(cell.field, value)}
                                               style={{
+                                                height: 40,
+                                                         width: 260,
                                                          flex:1,
                                                          paddingLeft:6
                                                      }}
