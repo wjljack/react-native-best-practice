@@ -224,7 +224,7 @@ export default class NewView extends React.Component {
         let source={uri : this.state.user.Photo, isStatic: true};
         return  <TouchableOpacity onPress={this.selectPhotoTapped.bind(this,cell.field)}>
             <View style={[styles.avatar,styles.avatarContainer]}>
-                {this.state.user.Photo === null ? <Text>{cell.text}</Text>:
+                {this.state.user.Photo === null ?  <Image style={styles.avatar} source={require('../HomeView/contact.png')}/>:
                     <Image style={styles.avatar} source={source} /> }
             </View>
         </TouchableOpacity>;
