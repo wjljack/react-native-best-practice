@@ -54,7 +54,16 @@ export default class NewView extends React.Component {
         query.equalTo('objectId', '5774ee9b5bbb50005928f11c');
         query.find().then(function (results) {
 
-            var data=  results[0].get("data").pages.find(p=>p.id=='18710ceb-ddfe-428f-ad85-ce810ad010c7').layout.ios.components;
+
+            var data={};
+            if(Platform.OS === 'ios') {
+                data=results[0].get("data").pages.find(p=>p.route == 'user/:userId').layout.ios.components;
+            }
+            else
+            {
+                data=results[0].get("data").pages.find(p=>p.route == 'user/:userId').layout.android.components;
+
+            }
             me.setState({metadataForm:data});
 
             if(me.props.name=="detailView")

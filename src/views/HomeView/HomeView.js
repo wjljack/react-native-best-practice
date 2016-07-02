@@ -1,7 +1,7 @@
 import React, {View, Text,Image, StyleSheet,PixelRatio,RefreshControl,ListView,ScrollView,TouchableHighlight} from "react-native";
 import Button from "react-native-button";
 import {Actions} from "react-native-router-flux";
-
+import { SwipeListView } from 'react-native-swipe-list-view';
 var AV = require('leancloud-storage');
 var APP_ID = 'yQvWzNn37xnO9c2saeIkTE4d-gzGzoHsz';
 var APP_KEY = 'CEDi2aX8iBl8eUwmy2yLnkcU';
@@ -59,13 +59,13 @@ const styles = StyleSheet.create({
         color: '#ea4c89',
         fontSize: 17,
         fontWeight: '500',
-        width: 180,
+        width: 170,
         marginLeft: 20
     },
     rowDetailText: {
         fontSize: 17,
         color: '#999',
-        width: 200
+        width: 170
     },
     avatarContainer: {
         justifyContent: 'center',
@@ -135,31 +135,69 @@ export default class HomeView extends React.Component {
             this.setState({refreshing: false});
         });
     }
+
+    remove(id,secId, rowId, rowMap)
+    {
+        var me=this;
+        var myUser = AV.Object.createWithoutData('MyUser', id);
+        myUser.destroy().then(function (success) {
+            rowMap[`${secId}${rowId}`].closeRow();
+            var query = new AV.Query('MyUser');
+
+            query.find().then(function (results) {
+
+                const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+                me.setState({dataSource: me.state.dataSource.cloneWithRows(
+                    results
+                ),  refreshing: false});
+            }, function (error) {
+                this.setState({refreshing: false});
+            });
+        }, function (error) {
+            // 删除失败
+        });
+    }
     render () {
         return (
             <View style={styles.container}>
-                    <ListView refreshControl={
+                    <SwipeListView refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
             onRefresh={this._onRefresh.bind(this)}/>}
                         dataSource={this.state.dataSource}
                         renderRow={this._renderRow}
+                                   renderHiddenRow={ (data, secId, rowId, rowMap) => (
+                <View style={{backgroundColor:'red',flex:1,  justifyContent: 'center',
+        alignItems: 'flex-end'}}>
+        <TouchableHighlight  onPress={()=>{
+        debugger;
+        this.remove(data.get('id'),secId, rowId, rowMap);
+        }}>
+                    <Text style={{fontSize:20,marginRight:16,color:'white', fontFamily: 'Cochin'}}>删除</Text>
+</TouchableHighlight>
+                </View>
+            )}
+                                   leftOpenValue={75}
+                                   rightOpenValue={-75}
+                                   disableRightSwipe={true}
                     />
             </View>
         )
     }
 
-    _renderRow (project, index) {
+    _renderRow (project,secId, rowId, rowMap) {
 
 
         let  source = {uri: project.get('Photo'), isStatic: true};
         return (
-            <View key={index}>
-                <TouchableHighlight onPress={()=> Actions.detailView({objectId:project.get('objectId')})}>
+            <View key={rowId}>
+                <TouchableHighlight onPress={()=>{  rowMap[`${secId}${rowId}`].closeRow(function() {
+                  console.log('closed');
+                }); Actions.detailView({objectId:project.get('objectId')});}}>
                     <View style={[styles.column]}>
 
                         {source.uri==undefined?
-                            <Image  style={{width: 48, height: 48, marginLeft:10}} source={require('./contact.png')} ></Image>
+                            <Image  style={{width: 44, height: 44, marginLeft:10}} source={require('./contact.png')} ></Image>
                         :
                             <View style={[styles.avatar,styles.avatarContainer]}>
                             <Image  style={{width: 41, height: 41,marginLeft:18, borderRadius: 19,}}
